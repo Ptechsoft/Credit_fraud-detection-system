@@ -1,0 +1,19 @@
+# Data files
+creditcard.csv
+*.csv
+
+# Python environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Large Preprocessing Objects
+# We ignore large data splits to stay under the 100MB limit
+split_data.pkl
+smote_data.pkl
+X_hybrid.pkl
+
+# EXCEPTIONS
+# We want to keep the scaler so teammates can use it
+!backend/robust_scaler.pkl
