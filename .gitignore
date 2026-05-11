@@ -17,3 +17,8 @@ X_hybrid.pkl
 # EXCEPTIONS
 # We want to keep the scaler so teammates can use it
 !backend/robust_scaler.pkl
+
+echo "notebook/X_train.pkl" >> .gitignore
+echo "notebook/X_test.pkl" >> .gitignore
+echo "notebook/y_train.pkl" >> .gitignore
+echo "notebook/y_test.pkl" >> .gitignore
