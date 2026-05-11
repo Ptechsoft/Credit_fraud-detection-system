@@ -125,3 +125,46 @@ def predict(transaction: Transaction):
             status_code=500,
             detail=f"Prediction error: {str(e)}"
         )
+
+# Endpoint 4  Batch Predict (for CSV Upload)
+@app.post("/predict_batch")
+def predict_batch(transactions: list[Transaction]):
+    try:
+        results = []
+        for transaction in transactions:
+            data = transaction.dict()
+
+            # Scale Time and Amount
+            time_amount = np.array([[data['Time'], data['Amount']]])
+            scaled = scaler.transform(time_amount)
+            scaled_time = scaled[0][0]
+            scaled_amount = scaled[0][1]
+
+            # Build feature array
+            features = []
+            for i in range(1, 29):
+                features.append(data[f'V{i}'])
+            features.append(scaled_amount)
+            features.append(scaled_time)
+
+            input_array = np.array(features).reshape(1, -1)
+
+            probability = model.predict_proba(input_array)[0][1]
+            threshold = 0.3
+            prediction = 1 if probability >= threshold else 0
+
+            results.append({
+                "prediction": int(prediction),
+                "probability": round(float(probability), 4),
+                "result": "🚨 FRAUDULENT TRANSACTION DETECTED" if prediction == 1 else "✅ LEGITIMATE TRANSACTION",
+                "confidence": f"{round(float(probability) * 100, 2)}%",
+                "threshold_used": threshold
+            })
+
+        return results
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Batch prediction error: {str(e)}"
+        )
