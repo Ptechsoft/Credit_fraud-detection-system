@@ -4,12 +4,15 @@ import joblib
 import numpy as np
 import os
 
+# Credit Card Fraud Detection API
+
 # Create FastAPI App
 app = FastAPI(
     title="Credit Card Fraud Detection API",
     description="An API that detects fraudulent credit card transactions using Machine Learning",
     version="1.0.0"
 )
+
 
 # Load Model and Scaler
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,31 +24,7 @@ try:
 except Exception as e:
     print(f"❌ Error loading model: {e}")
 
-# Endpoint 1  Home
-
-@app.get("/")
-def home():
-    return {
-        "message": "Welcome to Credit Card Fraud Detection API!",
-        "version": "1.0.0",
-        "team": "Ptechsoft",
-        "endpoints": {
-            "health": "/health",
-            "predict": "/predict"
-        }
-    }
-
-# Endpoint 2 Health Check
-@app.get("/health")
-def health():
-    return {
-        "status": "API is running",
-        "model": "XGBoost Classifier",
-        "port": 8007
-    }
-
-# Pydantic Input Schema 30 Transaction Features
-
+# Pydantic Input Schema — 30 Transaction Features
 class Transaction(BaseModel):
     Time: float
     V1: float
@@ -78,33 +57,61 @@ class Transaction(BaseModel):
     V28: float
     Amount: float
 
-# Endpoint 3 Predict Fraud
+# Endpoint 1 — Home
 
+@app.get("/")
+def home():
+    return {
+        "message": "Welcome to Credit Card Fraud Detection API!",
+        "version": "1.0.0",
+        "team": "3MTT C2 DATA SCIENCE(112)",
+        "endpoints": {
+            "health": "/health",
+            "predict": "/predict"
+        }
+    }
+
+
+# Endpoint 2 Health Check
+@app.get("/health")
+def health():
+    return {
+        "status": "API is running",
+        "model": "Random Forest Classifier",
+        "port": 8007
+    }
+
+
+# Endpoint 3 Predict Fraud
 @app.post("/predict")
 def predict(transaction: Transaction):
     try:
-        # Step 1 — Convert input to numpy array
+        #  Get all transaction values
         data = transaction.dict()
-        input_array = np.array(list(data.values())).reshape(1, -1)
 
-        # Step 2 — Scale only Time and Amount
-        time_amount = np.array([[data['Time'], data['Amount']]])
-        scaled_time_amount = scaler.transform(time_amount)
+        # Scale Amount and Time using Patrick's RobustScaler
+        amount_time = np.array([[data['Amount'], data['Time']]])
+        scaled = scaler.transform(amount_time)
+        scaled_amount = scaled[0][0]
+        scaled_time = scaled[0][1]
 
-        # Step 3 — Replace Time and Amount with scaled values
-        input_array[0][0] = scaled_time_amount[0][0]
-        input_array[0][29] = scaled_time_amount[0][1]
+        # Build feature array in correct order
+        features = []
+        for i in range(1, 29):
+            features.append(data[f'V{i}'])
+        features.append(scaled_amount)
+        features.append(scaled_time)
 
-        # Step 4 — Make prediction
+        input_array = np.array(features).reshape(1, -1)
+
+        #  Make prediction using Random Forest model
         probability = model.predict_proba(input_array)[0][1]
 
-        # Step 5 — Use custom threshold of 0.3
-        # Default threshold is 0.5 but fraud detection needs lower threshold
-        # to catch more frauds
+        # Use custom threshold of 0.3
         threshold = 0.3
         prediction = 1 if probability >= threshold else 0
 
-        # Step 6 — Return result
+        #  Return prediction result
         return {
             "prediction": int(prediction),
             "probability": round(float(probability), 4),
