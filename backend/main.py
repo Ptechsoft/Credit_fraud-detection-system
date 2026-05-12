@@ -135,11 +135,12 @@ def predict_batch(transactions: list[Transaction]):
             data = transaction.dict()
 
             # Scale Time and Amount
-            time_amount = np.array([[data['Time'], data['Amount']]])
-            scaled = scaler.transform(time_amount)
-            scaled_time = scaled[0][0]
-            scaled_amount = scaled[0][1]
+            amount_time = np.array([[data['Amount'], data['Time']]])
+            scaled = scaler.transform(amount_time)
+            scaled_amount = scaled[0][0]
+            scaled_time = scaled[0][1]
 
+            
             # Build feature array
             features = []
             for i in range(1, 29):
