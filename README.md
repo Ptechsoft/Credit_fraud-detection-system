@@ -2,7 +2,6 @@
 End-to-End Machine Learning Project | Data Science Group Project
 
 ## Project Overview
----
 
 The Credit Card Fraud Detection System was developed to address the growing challenge of identifying fraudulent financial transactions in real time. Fraudulent activities in digital payment systems continue to increase drastically, leading to financial losses, customer distrust, and greater risks for financial institutions.
 
