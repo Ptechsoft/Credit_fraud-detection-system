@@ -11,6 +11,23 @@ The system was designed as a collaborative end-to-end machine learning solution 
 
 Python - Pandas - Numpy - Matplotlit - Seaborn - FastAPI - Streamlit - Scikit-learn - XGBoost 
 
+## Problem Statement
+
+Financial institutions process millions of transactions daily. Detecting fraudulent transactions manually is inefficient due to.
+
+- Extremely large transaction volumes
+- Highly imbalanced fraud datasets
+- Rapidly evolving fraud patterns
+- Delayed fraud detection processes
+- Difficulty identifying hidden transaction anomalies
+
+## Project Objective
+
+The primary objective of the project was to develop a system capable of detecting fraudulent transactions with high accuracy. The project also focused to determine which model performed best on the imbalanced fraud dataset. Beyond model development, the project aimed to create a backend API for serving predictions and a frontend interface that allows users to interact with the model easily.
+
+Another major objective was to analyze transaction behavior patterns and understand the structure of the dataset through exploratory analysis.
+
+
 
 ## Team
 - Praise (Group Lead) — Backend / FastAPI
