@@ -18,6 +18,8 @@ End-to-End Machine Learning Project | Data Science Group Project
 
 [API Workflow (FastAPI Backend)](#api-workflow-(fastapi-backend))
 
+[Conclusion](#conclusion)
+
 ## Project Overview
 
 The Credit Card Fraud Detection System was developed to address the growing challenge of identifying fraudulent financial transactions in real time. Fraudulent activities in digital payment systems continue to increase drastically, leading to financial losses, customer distrust, and greater risks for financial institutions.
@@ -114,23 +116,9 @@ The FastAPI backend served as the communication bridge between the machine learn
 
 The backend workflow started when transaction details were submitted from the frontend interface. The FastAPI endpoint received the request and passed the transaction data through the trained machine learning model. After analysis, the backend generated a prediction indicating whether the transaction was fraudulent or legitimate and returned the result to the frontend.
 
+## Conclusion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The project successfully developed an end-to-end fraud detection system integrating machine learning, FastAPI, and Streamlit. The workflow effectively identified fraudulent transaction patterns, demonstrated strong model performance using ensemble methods, and established a scalable foundation for future real-time fraud detection solutions.
 
 ## Team
 - Praise (Group Lead) — Backend / FastAPI
