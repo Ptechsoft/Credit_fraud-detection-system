@@ -93,7 +93,7 @@ Reason: Better ability to learn complex fraud behavior patterns.
 ## API Workflow (FastAPI Backend)
 
 
-The FastAPI backend served as the communication bridge between the machine learning model and the frontend application. Its primary responsibility was to receive transaction data from users, process prediction requests, load the trained model, and return prediction responses.
+The FastAPI backend served as the communication bridge between the machine learning model and the frontend application. Its primary responsibility is to receive transaction data process prediction requests, load the trained model, and return prediction responses.
 
 The backend workflow started when transaction details were submitted from the frontend interface. The FastAPI endpoint received the request and passed the transaction data through the trained machine learning model. After analysis, the backend generated a prediction indicating whether the transaction was fraudulent or legitimate and returned the result to the frontend.
 
