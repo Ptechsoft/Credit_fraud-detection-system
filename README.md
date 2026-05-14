@@ -47,23 +47,23 @@ The best-performing models were identified, and was integrated into a FastAPI ba
 
 The dataset was inspected using Pandas functions such as:
 ```python
-.head(), .info(), .describe()
+.head(), .info(), .describe(), .duplicated().sum(), df['Class'].value_counts()
 ```
-to understand the number of rows, columns, and statistical summary. One of the observations was the severe class imbalance within the dataset. Fraudulent transactions represented only a very small percentage of the total transactions, while legitimate transactions dominated the dataset.
+to understand the number of rows, columns,statistical summary, check duplication and distribution. One of the observations was class imbalance within the dataset. Fraudulent transactions represented only a very small percentage of the total transactions, while legitimate transactions dominated the dataset.
 
-About 1081 duplicate rows were identified during the analysis stage. These values could negatively affect the learning process so it has to be removed.
+About 1081 duplicate rows were identified. These values could negatively affect the learning process so it has to be removed.
 
 ## Model Training Workflow
 
 The model training focused on identifying the most effective machine learning algorithm for detecting fraudulent transactions. Multiple models were trained and compared to understand their predictive strengths and weaknesses.
 
-Logistic Regression was first used as a baseline model because of its simplicity and interpretability. The model trained quickly and provided a useful benchmark for comparing other algorithms. The observations from training showed that Logistic Regression couldn't handle highly complex fraud patterns.
+- Logistic Regression was first used as a baseline model because of its simplicity and interpretability. The model trained quickly and provided a useful benchmark for comparing other algorithms. The observations from training showed that Logistic Regression couldn't handle highly complex fraud patterns.
 
-Random Forest Classifier was then introduced as an ensemble learning model. During training, the model demonstrated stronger classification capability and better handling of non-linear relationships within the dataset. The observations from the Random Forest model showed improved fraud detection performance and reduced overfitting risk.
+- Random Forest Classifier was then introduced as an ensemble learning model. During training, the model demonstrated stronger classification capability and better handling of non-linear relationships within the dataset. The observations from the Random Forest model showed improved fraud detection performance and reduced overfitting risk.
 
-XGBoost was also trained because of its strong performance in classification tasks involving imbalanced datasets. The training process showed that XGBoost handled fraud detection effectively and improved prediction performance significantly. The use of scale_pos_weight helped address class imbalance during training.
+- XGBoost was also trained because of its strong performance in classification tasks involving imbalanced datasets. The training process showed that XGBoost handled fraud detection effectively and improved prediction performance significantly. The use of scale_pos_weight helped address class imbalance during training.
 
-Gradient Boosting Classifier was trained as another ensemble learning approach. The model demonstrated strong learning capability and competitive performance, although it required more computational resources compared to simpler algorithms.
+- Gradient Boosting Classifier was trained as another ensemble learning approach. The model demonstrated strong learning capability and competitive performance, although it required more computational resources compared to simpler algorithms.
 
 ## Key Finding and Model Evaluation
 
