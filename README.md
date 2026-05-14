@@ -45,11 +45,11 @@ The best-performing models were identified, and was integrated into a FastAPI ba
 
 ## EDA and Pre-Processing Workflow
 
-The dataset was inspected using Pandas functions such as .head(), .info(), and .describe() to understand the number of rows, columns, and statistical summary.
+The dataset was inspected using Pandas functions such as:
 ```python
-.head()
+.head(), .info(), .describe()
 ```
-One of the observations was the severe class imbalance within the dataset. Fraudulent transactions represented only a very small percentage of the total transactions, while legitimate transactions dominated the dataset.
+to understand the number of rows, columns, and statistical summary. One of the observations was the severe class imbalance within the dataset. Fraudulent transactions represented only a very small percentage of the total transactions, while legitimate transactions dominated the dataset.
 
 About 1081 duplicate rows were identified during the analysis stage. These values could negatively affect the learning process so it has to be removed.
 
