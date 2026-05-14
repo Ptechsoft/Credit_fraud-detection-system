@@ -35,6 +35,27 @@ The primary objective of the project was to develop a system capable of detectin
 
 Another major objective was to analyze transaction behavior patterns and understand the structure of the dataset through exploratory analysis.
 
+## Project Workflow
+
+The project started with dataset collection and inspection. The dataset was first analyzed to understand its structure, transaction distribution, and the relationships withing the dataset. Exploratory Data Analysis was carried out to identify duplicate records, check missing values, and visualize patterns in the dataset.
+
+After the EDA phase, preprocessing was performed to clean the dataset and prepare it for machine learning training. The cleaned data was then divided into training and testing sets before multiple machine learning models were trained and evaluated.
+
+The best-performing models were identified, and was integrated into a FastAPI backend system. The backend handled prediction requests and communicated with the Streamlit frontend interface allowing users to interact with the fraud detection system in real time.
+
+## EDA and Pre-Processing Workflow
+
+The dataset was inspected using Pandas functions such as 
+'''python
+df.head()
+
+.head(), .info(), and .describe() to understand the number of rows, columns, feature distributions, and data types.
+
+One of the most important observations made during the analysis was the severe class imbalance within the dataset. Fraudulent transactions represented only a very small percentage of the total transactions, while legitimate transactions dominated the dataset. This observation influenced many later decisions in the workflow, especially during model evaluation and training.
+
+The EDA also revealed the presence of duplicate records. About 1081 duplicate rows were identified during the analysis stage. These duplicate values could negatively affect the learning process by causing bias in the models. To solve this issue, the duplicate records were removed before preprocessing and training.
+
+Another important observation was that the dataset contained no missing values. This simplified preprocessing and improved confidence in the quality of the dataset.
 
 
 ## Team
