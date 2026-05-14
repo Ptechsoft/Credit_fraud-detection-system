@@ -1,6 +1,15 @@
 # Credit Card Fraud Detection System
 End-to-End Machine Learning Project | Data Science Group Project
-[Project Overview]
+
+### Table of Content:
+[Project Overview](#project-overview)
+[Problem Statement](#problem-statement)
+[Project Objective](#project-objective)
+[Project Workflow](#project-workflow)
+[EDA and Pre-Processing Workflow](#eda-and-pre-processing-workflow)
+[Model Training Workflow](#model-training-workflow)
+[Key Finding and Model Evaluation](#key-finding-and-model-evaluation)
+[API Workflow (FastAPI Backend)](#api-workflow-(fastapi-backend))
 
 ## Project Overview
 
