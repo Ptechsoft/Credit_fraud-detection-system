@@ -9,7 +9,15 @@ This project combines Exploratory Data Analysis (EDA), machine learning model tr
 
 The system was designed as a collaborative end-to-end machine learning solution using the following tools:
 
-Python - Pandas - Numpy - Matplotlit - Seaborn - FastAPI - Streamlit - Scikit-learn - XGBoost 
+- Python
+- Pandas
+- Numpy
+- Matplotlit
+- Seaborn
+- FastAPI
+- Streamlit
+- Scikit-learn
+- XGBoost 
 
 ## Problem Statement
 
