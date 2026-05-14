@@ -67,19 +67,21 @@ The model training focused on identifying the most effective machine learning al
 
 ## Key Finding and Model Evaluation
 
-
 ### Importance of Recall
 Because fraud detection prioritizes identifying fraudulent transactions, recall became a critical metric.
+
 Observation:
 High recall reduces undetected fraud cases.
 
 ### Precision vs Recall Balance
 A balance between precision and recall was necessary to:
+
 Reduce false positives
 Maintain fraud detection sensitivity
 
 ### Ensemble Models Performed Better
 Random Forest and XGBoost demonstrated stronger fraud detection capability compared to the baseline model.
+
 Reason: Better ability to learn complex fraud behavior patterns.
 
 ### Feature Importance Analysis
