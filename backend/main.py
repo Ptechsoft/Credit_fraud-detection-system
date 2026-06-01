@@ -4,17 +4,21 @@ import joblib
 import numpy as np
 import os
 
+# ================================================
 # Credit Card Fraud Detection API
+# Built by Praise Group Lead
+# 3MTT C2 Data Science (112)
+# ================================================
 
-# Create FastAPI App
 app = FastAPI(
     title="Credit Card Fraud Detection API",
     description="An API that detects fraudulent credit card transactions using Machine Learning",
     version="1.0.0"
 )
 
-
+# ================================================
 # Load Model and Scaler
+# ================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 try:
@@ -24,7 +28,10 @@ try:
 except Exception as e:
     print(f"❌ Error loading model: {e}")
 
+
+# ================================================
 # Pydantic Input Schema — 30 Transaction Features
+# ================================================
 class Transaction(BaseModel):
     Time: float
     V1: float
@@ -57,8 +64,32 @@ class Transaction(BaseModel):
     V28: float
     Amount: float
 
-# Endpoint 1 — Home
 
+# ================================================
+# Helper Function — Build Feature Array
+# ================================================
+def build_features(data: dict) -> np.ndarray:
+    # Scale Amount and Time using Patrick's RobustScaler
+    # Patrick fitted scaler on [Amount, Time] in that order
+    amount_time = np.array([[data['Amount'], data['Time']]])
+    scaled = scaler.transform(amount_time)
+    scaled_amount = scaled[0][0]
+    scaled_time = scaled[0][1]
+
+    # Build feature array in correct order
+    # Patrick's column order: V1-V28, scaled_amount, scaled_time
+    features = []
+    for i in range(1, 29):
+        features.append(data[f'V{i}'])
+    features.append(scaled_amount)
+    features.append(scaled_time)
+
+    return np.array(features).reshape(1, -1)
+
+
+# ================================================
+# Endpoint 1 — Home
+# ================================================
 @app.get("/")
 def home():
     return {
@@ -67,12 +98,15 @@ def home():
         "team": "3MTT C2 DATA SCIENCE(112)",
         "endpoints": {
             "health": "/health",
-            "predict": "/predict"
+            "predict": "/predict",
+            "predict_batch": "/predict_batch"
         }
     }
 
 
-# Endpoint 2 Health Check
+# ================================================
+# Endpoint 2 — Health Check
+# ================================================
 @app.get("/health")
 def health():
     return {
@@ -82,36 +116,19 @@ def health():
     }
 
 
-# Endpoint 3 Predict Fraud
+# ================================================
+# Endpoint 3 — Single Predict
+# ================================================
 @app.post("/predict")
 def predict(transaction: Transaction):
     try:
-        #  Get all transaction values
         data = transaction.dict()
+        input_array = build_features(data)
 
-        # Scale Amount and Time using Patrick's RobustScaler
-        amount_time = np.array([[data['Amount'], data['Time']]])
-        scaled = scaler.transform(amount_time)
-        scaled_amount = scaled[0][0]
-        scaled_time = scaled[0][1]
-
-        # Build feature array in correct order
-        features = []
-        for i in range(1, 29):
-            features.append(data[f'V{i}'])
-        features.append(scaled_amount)
-        features.append(scaled_time)
-
-        input_array = np.array(features).reshape(1, -1)
-
-        #  Make prediction using Random Forest model
         probability = model.predict_proba(input_array)[0][1]
-
-        # Use custom threshold of 0.3
         threshold = 0.3
         prediction = 1 if probability >= threshold else 0
 
-        #  Return prediction result
         return {
             "prediction": int(prediction),
             "probability": round(float(probability), 4),
@@ -121,7 +138,33 @@ def predict(transaction: Transaction):
         }
 
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Prediction error: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
+
+
+# ================================================
+# Endpoint 4 — Batch Predict (CSV Upload)
+# ================================================
+@app.post("/predict_batch")
+def predict_batch(transactions: list[Transaction]):
+    try:
+        results = []
+        for transaction in transactions:
+            data = transaction.dict()
+            input_array = build_features(data)
+
+            probability = model.predict_proba(input_array)[0][1]
+            threshold = 0.3
+            prediction = 1 if probability >= threshold else 0
+
+            results.append({
+                "prediction": int(prediction),
+                "probability": round(float(probability), 4),
+                "result": "🚨 FRAUDULENT TRANSACTION DETECTED" if prediction == 1 else "✅ LEGITIMATE TRANSACTION",
+                "confidence": f"{round(float(probability) * 100, 2)}%",
+                "threshold_used": threshold
+            })
+
+        return results
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Batch prediction error: {str(e)}")
