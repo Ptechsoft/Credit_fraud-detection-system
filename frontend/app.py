@@ -4,8 +4,8 @@ import requests
 
 ## CONFIG NETWORK PORT
 
-API_URL_SINGLE = "http://127.0.0.1:8007/predict"
-API_URL_BATCH = "http://127.0.0.1:8007/predict_batch"
+API_URL_SINGLE = "https://credit-fraud-detection-system-cg3l.onrender.com/predict"
+API_URL_BATCH  = "https://credit-fraud-detection-system-cg3l.onrender.com/predict_batch"
 
 st.set_page_config(
     page_title="Credit Card Fraud Detection Dashboard",
