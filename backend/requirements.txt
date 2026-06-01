@@ -1,8 +1,6 @@
-cat > requirements.txt << 'EOF'
 fastapi==0.111.0
 uvicorn==0.29.0
 joblib
 numpy
 scikit-learn
 pydantic==2.7.1
-EOF
